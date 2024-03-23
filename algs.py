@@ -37,9 +37,9 @@ def obtener_camino(nodo_final, estructura_datos):
     return camino, costo
 
 
-def coste_uniforme(graph, start, target, direction="I"):
+def coste_uniforme(grafo, inicio, objetivo, direction="I"):
     ABIERTA = []
-    ABIERTA.append(start)
+    ABIERTA.append(inicio)
     TABLA_A = {}
     counter = 0
     console = Console()
@@ -63,7 +63,7 @@ def coste_uniforme(graph, start, target, direction="I"):
                 "sucesores": [],
                 "coste_al_anterior": 0,
             }
-        for hijo in graph[vertice] if direction == "I" else graph[vertice][::-1]:
+        for hijo in grafo[vertice] if direction == "I" else grafo[vertice][::-1]:
             if hijo[0] not in TABLA_A:
                 TABLA_A[vertice]["sucesores"].append(hijo[0])
                 TABLA_A[hijo[0]] = {
@@ -87,12 +87,12 @@ def coste_uniforme(graph, start, target, direction="I"):
                 str(TABLA_A[vertice]),
                 str(camino),
                 str(costo_total),
-                "Si" if vertice == target else "No",
+                "Si" if vertice == objetivo else "No",
             ],
             style="bright_green",
         )
         counter += 1
-        if vertice == target:
+        if vertice == objetivo:
             console.print(tabla)
             return True
     console.print(tabla)
@@ -168,9 +168,9 @@ def busqueda_en_anchura(grafo, inicio, objetivo, direccion="I", max_anchura=1000
     return False
 
 
-def dfs(graph, start, target, direction="I", max_profundidad=1000):
+def dfs(grafo, inicio, objetivo, direction="I", max_profundidad=1000):
     ABIERTA = deque()
-    ABIERTA.append(start)
+    ABIERTA.append(inicio)
     TABLA_A = {}
     counter = 0
     console = Console()
@@ -197,7 +197,7 @@ def dfs(graph, start, target, direction="I", max_profundidad=1000):
                 "coste_al_anterior": 0,
             }
 
-        for hijo in graph[vertice][::-1] if direction == "I" else graph[vertice]:
+        for hijo in grafo[vertice][::-1] if direction == "I" else grafo[vertice]:
             if hijo[0] not in TABLA_A:
                 TABLA_A[vertice]["sucesores"].append(hijo[0])
                 TABLA_A[hijo[0]] = {
@@ -216,12 +216,12 @@ def dfs(graph, start, target, direction="I", max_profundidad=1000):
                 str(TABLA_A[vertice]),
                 str(camino),
                 str(costo_total),
-                "Si" if vertice == target else "No",
+                "Si" if vertice == objetivo else "No",
             ],
             style="bright_green",
         )
         counter += 1
-        if vertice == target:
+        if vertice == objetivo:
             console.print(tabla)
             return True
     console.print(tabla)
@@ -252,10 +252,10 @@ def busqueda_en_profundidad_iterativa(
     )
 
 
-def a_estrella(graph, start, goal):
+def a_estrella(grafo, inicio, objetivo):
     ABIERTA = []
     TABLA_A = {}
-    ABIERTA.append(start)
+    ABIERTA.append(inicio)
     counter = 0
     console = Console()
     tabla = Table(
@@ -308,15 +308,15 @@ def a_estrella(graph, start, goal):
                 str(camino),
                 str(costo),
                 str(TABLA_A[n]["h"]),
-                "Si" if n == goal else "No",
+                "Si" if n == objetivo else "No",
             ],
             style="bright_green",
         )
         counter += 1
-        if n == goal:
+        if n == objetivo:
             console.print(tabla)
             return True
-        for q in graph[n]:
+        for q in grafo[n]:
             if q[0] in TABLA_A:
                 rectificar(q[0], n, q[1])
                 ordenar_abierta()
